@@ -22,6 +22,10 @@
   
   --clr-lectivo: #ffffff;
   --clr-no-lectivo: #f1f5f9;
+
+  --clr-lectivo-comentario: #e8eca0; /* Tono pastel añil/azul suave que encaja con --primary (#4f46e5) y la estética del sitio */
+  --text-lectivo-comentario: #667409;
+
   --clr-festivo: #fecdd3; 
   --clr-vacaciones: #bfdbfe; 
   --clr-otro: #bbf7d0; 
@@ -119,6 +123,13 @@ select:focus{ border-color: var(--primary); }
 .empty{ visibility:hidden; }
 
 .lectivo{ background-color: var(--clr-lectivo); color: var(--text-main); }
+
+.day.lectivo.has-note {
+  background-color: var(--clr-lectivo-comentario);
+  color: var(--text-lectivo-comentario);
+}
+
+
 .no_lectivo{ background-color: var(--clr-no-lectivo); color: var(--text-no-lectivo); }
 .festivo{ background-color: var(--clr-festivo); color: var(--text-festivo); }
 .vacaciones{ background-color: var(--clr-vacaciones); color: var(--text-vacaciones); }
@@ -480,7 +491,9 @@ function render(){
     
     const isToday = (day === todayDay && month === todayMonth && year === todayYear) ? 'today' : '';
     const isSelectedClass = (isSelectionMode && selectedDays.has(k)) ? 'selected' : '';
-    card.className=`day ${data.type} ${isToday} ${isSelectedClass}`;
+    const hasNoteClass = (data.note && data.note.trim() !== '') ? 'has-note' : '';
+
+card.className=`day ${data.type} ${hasNoteClass} ${isToday} ${isSelectedClass}`;
 
     let icon = data.alarmTime ? '<span class="bell-icon">🔔</span>' : '';
 
